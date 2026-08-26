@@ -192,3 +192,22 @@ h1 {
   color: #64748b;
   font-size: 13px;
 }
+.expense-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.expense-info strong {
+  font-size: 16px;
+}
+
+.expense-amount {
+  font-weight: 600;
+}
+
+.expense-category,
+.expense-date {
+  color: #64748b;
+  font-size: 13px;
+}

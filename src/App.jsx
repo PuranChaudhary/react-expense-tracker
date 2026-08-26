@@ -4,6 +4,7 @@ function App() {
   const [expenseName, setExpenseName] = useState('')
   const [amount, setAmount] = useState('')
   const [category, setCategory] = useState('')
+  const [date, setDate] = useState('')
 
   const [expenses, setExpenses] = useState(() => {
     const savedExpenses = localStorage.getItem('expenses')
@@ -30,12 +31,17 @@ if (!category) {
   alert('Please select a category.')
   return
 }
+if (!date) {
+  alert('Please select a date.')
+  return
+}
 
     const newExpense = {
       id: Date.now(),
       name: expenseName,
       amount: Number(amount),
        category: category,
+       date: date,
     }
 
     setExpenses([...expenses, newExpense])
@@ -43,6 +49,7 @@ if (!category) {
     setExpenseName('')
     setAmount('')
     setCategory('')
+    setDate('')
   }
 
   function deleteExpense(id) {
@@ -134,6 +141,11 @@ if (!category) {
   <option value="Education">📚 Education</option>
   <option value="Other">📦 Other</option>
 </select>
+            <input
+  type="date"
+  value={date}
+  onChange={(e) => setDate(e.target.value)}
+/>
 
           <button type="submit">
             Add Expense
@@ -158,12 +170,23 @@ if (!category) {
         className="expense-item"
         key={expense.id}
       >
-        <span>
-  {expense.name} - Rs. {expense.amount}
+        <div className="expense-info">
+  <strong>
+    {expense.name}
+  </strong>
+
+  <span className="expense-amount">
+    Rs. {expense.amount}
+  </span>
+
   <small className="expense-category">
     {expense.category}
   </small>
-</span>
+
+  <small className="expense-date">
+    📅 {expense.date}
+  </small>
+</div>
 
         <div className="actions">
           <button
