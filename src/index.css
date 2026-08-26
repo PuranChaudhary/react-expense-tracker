@@ -186,3 +186,9 @@ h1 {
     font-size: 20px;
   }
 }
+.expense-category {
+  display: block;
+  margin-top: 5px;
+  color: #64748b;
+  font-size: 13px;
+}

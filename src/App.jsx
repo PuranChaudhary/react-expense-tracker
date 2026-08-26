@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 function App() {
   const [expenseName, setExpenseName] = useState('')
   const [amount, setAmount] = useState('')
+  const [category, setCategory] = useState('')
 
   const [expenses, setExpenses] = useState(() => {
     const savedExpenses = localStorage.getItem('expenses')
@@ -25,17 +26,23 @@ if (!amount || Number(amount) <= 0) {
   alert('Please enter a valid amount.')
   return
 }
+if (!category) {
+  alert('Please select a category.')
+  return
+}
 
     const newExpense = {
       id: Date.now(),
       name: expenseName,
       amount: Number(amount),
+       category: category,
     }
 
     setExpenses([...expenses, newExpense])
 
     setExpenseName('')
     setAmount('')
+    setCategory('')
   }
 
   function deleteExpense(id) {
@@ -115,6 +122,18 @@ if (!amount || Number(amount) <= 0) {
               setAmount(e.target.value)
             }
           />
+          <select
+  value={category}
+  onChange={(e) => setCategory(e.target.value)}
+>
+  <option value="">Select category</option>
+  <option value="Food">🍔 Food</option>
+  <option value="Transport">🚗 Transport</option>
+  <option value="Shopping">🛍️ Shopping</option>
+  <option value="Bills">💡 Bills</option>
+  <option value="Education">📚 Education</option>
+  <option value="Other">📦 Other</option>
+</select>
 
           <button type="submit">
             Add Expense
@@ -140,8 +159,11 @@ if (!amount || Number(amount) <= 0) {
         key={expense.id}
       >
         <span>
-          {expense.name} - Rs. {expense.amount}
-        </span>
+  {expense.name} - Rs. {expense.amount}
+  <small className="expense-category">
+    {expense.category}
+  </small>
+</span>
 
         <div className="actions">
           <button
