@@ -102,10 +102,30 @@ if (!date) {
         (expense) =>
           expense.category === filterCategory
       )
-  const totalExpense = filteredExpenses.reduce(
-    (total, expense) => total + expense.amount,
-    0
-  )
+
+const totalExpense = expenses.reduce(
+  (total, expense) => total + expense.amount,
+  0
+)
+
+const totalItems = expenses.length
+
+const averageExpense =
+  expenses.length > 0
+    ? totalExpense / expenses.length
+    : 0
+    const categoryTotals = expenses.reduce(
+  (totals, expense) => {
+    if (!totals[expense.category]) {
+      totals[expense.category] = 0
+    }
+
+    totals[expense.category] += expense.amount
+
+    return totals
+  },
+  {}
+)
 
   return (
     <div className="app">
@@ -160,6 +180,44 @@ if (!date) {
           </button>
         </form>
 
+            <div className="stats">
+  <div className="stat-card">
+    <span>Total Expense</span>
+    <strong>Rs. {totalExpense}</strong>
+  </div>
+
+  <div className="stat-card">
+    <span>Total Items</span>
+    <strong>{totalItems}</strong>
+  </div>
+
+  <div className="stat-card">
+    <span>Average Expense</span>
+    <strong>Rs. {averageExpense.toFixed(2)}</strong>
+  </div>
+</div>
+
+          <div className="category-summary">
+  <h2>Spending by Category</h2>
+
+  {Object.entries(categoryTotals).length === 0 ? (
+    <p className="empty-message">
+      No category data available.
+    </p>
+  ) : (
+    Object.entries(categoryTotals).map(
+      ([category, total]) => (
+        <div
+          className="category-row"
+          key={category}
+        >
+          <span>{category}</span>
+          <strong>Rs. {total}</strong>
+        </div>
+      )
+    )
+  )}
+</div>
         <div className="total">
           <span>Total Expense</span>
           <strong>Rs. {totalExpense}</strong>
