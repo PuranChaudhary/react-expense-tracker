@@ -211,3 +211,31 @@ h1 {
   color: #64748b;
   font-size: 13px;
 }
+
+.filter {
+  margin-bottom: 20px;
+}
+
+.filter label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.filter select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: white;
+  color: #1e293b;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.filter select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}

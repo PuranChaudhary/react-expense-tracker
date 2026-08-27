@@ -5,6 +5,7 @@ function App() {
   const [amount, setAmount] = useState('')
   const [category, setCategory] = useState('')
   const [date, setDate] = useState('')
+  const [filterCategory, setFilterCategory] = useState('All')
 
   const [expenses, setExpenses] = useState(() => {
     const savedExpenses = localStorage.getItem('expenses')
@@ -94,7 +95,14 @@ if (!date) {
     )
   }
 
-  const totalExpense = expenses.reduce(
+  const filteredExpenses =
+  filterCategory === 'All'
+    ? expenses
+    : expenses.filter(
+        (expense) =>
+          expense.category === filterCategory
+      )
+  const totalExpense = filteredExpenses.reduce(
     (total, expense) => total + expense.amount,
     0
   )
@@ -159,13 +167,29 @@ if (!date) {
 
         <div className="expense-list">
   <h2>Expenses</h2>
+  <div className="filter">
+  <label>Filter by category:</label>
+
+  <select
+    value={filterCategory}
+    onChange={(e) => setFilterCategory(e.target.value)}
+  >
+    <option value="All">All Categories</option>
+    <option value="Food">🍔 Food</option>
+    <option value="Transport">🚗 Transport</option>
+    <option value="Shopping">🛍️ Shopping</option>
+    <option value="Bills">💡 Bills</option>
+    <option value="Education">📚 Education</option>
+    <option value="Other">📦 Other</option>
+  </select>
+</div>
 
   {expenses.length === 0 ? (
     <p className="empty-message">
       No expenses yet. Add your first expense!
     </p>
   ) : (
-    expenses.map((expense) => (
+    filteredExpenses.map((expense) => (
       <div
         className="expense-item"
         key={expense.id}
